@@ -8,4 +8,7 @@ Demo hosted here: https://minesweeperweb.herokuapp.com/
 
 ![MineSweeper](/public/images/Minesweeper.png)
 
- - My keyboard does not have a middle mouse key so i couldnt test it out. so i gave the left key the its funtionality 
+ - Right click to drop flag
+ - If you flag a bomb number of bombs left reduce
+ - Left click to open tile
+ 
