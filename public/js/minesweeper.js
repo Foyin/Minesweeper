@@ -141,6 +141,7 @@ function make2DArray(cols, rows) {
 function smileyDown() {
     var smiley = document.getElementById("smiley");
     smiley.classList.add("face_down");
+    document.getElementById("win").style.visibility = "visible";
     setDifficulty(gameSetup);
 }
 
@@ -154,6 +155,8 @@ function smileyUp() {
 
 function smileyWin() {
     var smiley = document.getElementById("smiley");
+    document.getElementById("win").style.visibility = "visible";
+    document.getElementById("myCanvas").style.visibility = "hidden";
     smiley.classList.add("face_win");   
 }
 
@@ -264,8 +267,6 @@ function youWin() {
                   if (winCount === ((cols * rows) - numBombs)) {
                     stopTimer();
                     smileyWin();
-                    document.getElementById("win").style.visibility = "visible";
-                    document.getElementById("myCanvas").style.visibility = "hidden";
                   }  
         }
       }
