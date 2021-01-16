@@ -141,7 +141,8 @@ function make2DArray(cols, rows) {
 function smileyDown() {
     var smiley = document.getElementById("smiley");
     smiley.classList.add("face_down");
-    document.getElementById("win").style.visibility = "visible";
+    document.getElementById("win").style.visibility = "hidden";
+    document.getElementById("myCanvas").style.visibility = "visible";
     setDifficulty(gameSetup);
 }
 
