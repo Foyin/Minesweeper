@@ -59,6 +59,8 @@ function gameSetup(){
   numFlags = 0;
   document.getElementById("flagCount").innerHTML = numBombs;
   document.getElementById("lose").style.visibility = "hidden";
+  document.getElementById("win").style.visibility = "hidden";
+
   //colorMode(RGB);
   //gridSet()
   ctx.canvas.width  = cols * scale;
@@ -148,6 +150,7 @@ function smileyDown() {
 
 function smileyUp() {
     var smiley = document.getElementById("smiley");
+    document.getElementById("win").style.visibility = "hidden";
     smiley.classList.remove("face_down");
     smiley.classList.remove("face_limbo");
     smiley.classList.remove("face_win");
