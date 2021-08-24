@@ -1,6 +1,6 @@
 Click on smiley to start and restart the game.
 
-Demo hosted here: https://minesweeperweb.herokuapp.com/
+Demo hosted here: https://main.d4hqf5nx8i3oy.amplifyapp.com/
 
 ![MineSweeper](/images/Minesweeper.png)
 
