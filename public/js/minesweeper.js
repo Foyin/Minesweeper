@@ -3,6 +3,7 @@ let ctx;
 let mineImg;
 let flagImg;
 let mineHitImg;
+let bombMarkedImg;
 let timeValue;
 let tiles;
 let cols;
@@ -83,9 +84,11 @@ function gameSetup(){
 
   mineImg = new Image();
   flagImg = new Image();
-  flagImg.src = "images/flagRed.png"; 
+  flagImg.src = "images/flag.png"; 
   mineHitImg = new Image();
   mineHitImg.src = "images/mine_hit.png";
+  bombMarkedImg = new Image();
+  bombMarkedImg.src = "images/mine_marked.png";
 
 
   //colorMode(RGB);
@@ -211,7 +214,6 @@ function draw(e){
   var mouse = getMousePos(canvas, e);
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
-      
       tiles[i][j].show(); 
       if(tiles[i][j].flagged && !tiles[i][j].isOpen){
         //ctx.fillStyle = "rgba(255, 0, 0)"
@@ -221,6 +223,13 @@ function draw(e){
           tiles[i][j].y,
           tiles[i][j].w, 
           tiles[i][j].h);
+          if(tiles[i][j].isBomb){
+            ctx.drawImage(bombMarkedImg, 
+              tiles[i][j].x,
+              tiles[i][j].y,
+              tiles[i][j].w, 
+              tiles[i][j].h);
+          }
       }  
     }
   }
