@@ -28,30 +28,45 @@ function ellipse(x, y, r) {
 function setDifficulty(callback) {
     var difficultySelector = document.getElementById("difficulty");
     var difficulty = difficultySelector.selectedIndex;
+    const EASY = {
+      cols: 4,
+      rows: 4,
+      numBombs: 6,
+    }
+    const NORMAL = {
+      cols: 8,
+      rows: 8,
+      numBombs: 25,
+    }
+    const HARD = {
+      cols: 16,
+      rows: 16,
+      numBombs: 40,
+    }
     switch(difficulty) {
       case 0:
-        cols = 4
-        rows = 4
-        numBombs = 6
+        cols = EASY.cols
+        rows = EASY.rows
+        numBombs = EASY.numBombs
         scale = 40
         break;
       case 1:
-        cols = 16
-        rows = 16
-        numBombs = 40
+        cols = NORMAL.cols
+        rows = NORMAL.rows
+        numBombs = NORMAL.numBombs
         scale = 40
         break;
       case 2:
-        cols = 30
-        rows = 16
-        numBombs = 99
+        cols = HARD.cols
+        rows = HARD.rows
+        numBombs = HARD.numBombs
         scale = 40
         break;
       default:
-        cols = 9
-        rows = 9
+        cols = EASY.cols
+        rows = EASY.rows
+        numBombs = EASY.numBombs
         scale = 40
-        numBombs = 9
         // code block
     }
     startTimer();
@@ -68,7 +83,10 @@ function gameSetup(){
 
   mineImg = new Image();
   flagImg = new Image();
+  flagImg.src = "images/flagRed.png"; 
   mineHitImg = new Image();
+  mineHitImg.src = "images/mine_hit.png";
+
 
   //colorMode(RGB);
   //gridSet()
@@ -198,8 +216,11 @@ function draw(e){
       if(tiles[i][j].flagged && !tiles[i][j].isOpen){
         //ctx.fillStyle = "rgba(255, 0, 0)"
         //ellipse(tiles[i][j].x + tiles[i][j].w * 0.5, tiles[i][j].y + tiles[i][j].w * 0.5, tiles[i][j].w * 0.5); 
-        flagImg.src = "images/flag.png"; 
-        ctx.drawImage(flagImg, tiles[i][j].x , tiles[i][j].y, tiles[i][j].w, tiles[i][j].h);
+        ctx.drawImage(flagImg, 
+          tiles[i][j].x,
+          tiles[i][j].y,
+          tiles[i][j].w, 
+          tiles[i][j].h);
       }  
     }
   }
@@ -208,7 +229,6 @@ function draw(e){
 
 window.addEventListener("mousedown", buttonControl);
 function buttonControl(e) {
-  mineHitImg.src = "images/mine_hit.png";
   var mouse = getMousePos(canvas, e);
 
   for (var i = 0; i < cols; i++) {
@@ -310,10 +330,10 @@ function tile(i, j) {
     
     ctx.beginPath();
     ctx.rect(this.x, this.y, this.w, this.h);
-    ctx.fillStyle = "rgba(255, 255, 255)";
+    ctx.fillStyle = "rgba(127, 127, 127)";
     ctx.fill();
     ctx.lineWidth = "2";
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = "white";
     ctx.stroke();
 
     if (this.isOpen) {
