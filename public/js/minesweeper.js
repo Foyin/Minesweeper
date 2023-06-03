@@ -1,5 +1,8 @@
 const canvas = document.getElementById('myCanvas');
-const ctx = canvas.getContext('2d');
+let ctx;
+let mineImg;
+let flagImg;
+let mineHitImg;
 let timeValue;
 let tiles;
 let cols;
@@ -27,9 +30,9 @@ function setDifficulty(callback) {
     var difficulty = difficultySelector.selectedIndex;
     switch(difficulty) {
       case 0:
-        cols = 9
-        rows = 9
-        numBombs = 10
+        cols = 4
+        rows = 4
+        numBombs = 6
         scale = 40
         break;
       case 1:
@@ -61,6 +64,12 @@ function gameSetup(){
   document.getElementById("lose").style.visibility = "hidden";
   document.getElementById("win").style.visibility = "hidden";
 
+  ctx = canvas.getContext('2d');
+
+  mineImg = new Image();
+  flagImg = new Image();
+  mineHitImg = new Image();
+
   //colorMode(RGB);
   //gridSet()
   ctx.canvas.width  = cols * scale;
@@ -70,7 +79,6 @@ function gameSetup(){
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       tiles[i][j] = new tile(i, j);
-
     }
   }
 
@@ -101,13 +109,12 @@ function gameSetup(){
     }
   }
 
-
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       tiles[i][j].show(); 
       if(tiles[i][j].flagged && !tiles[i][j].isOpen){
-        ctx.fillStyle = "rgba(255, 0, 0)"
-        ellipse(tiles[i][j].x + tiles[i][j].w * 0.5, tiles[i][j].y + tiles[i][j].w * 0.5, tiles[i][j].w * 0.5);  
+        //ctx.fillStyle = "rgba(255, 0, 0)"
+        //ellipse(tiles[i][j].x + tiles[i][j].w * 0.5, tiles[i][j].y + tiles[i][j].w * 0.5, tiles[i][j].w * 0.5);  
       }  
     }
   }
@@ -178,30 +185,36 @@ function getMousePos(canvas, evt) {
   };
 }
 
+
+//TODO: Lcheck here for redundancy
 window.addEventListener('mouseup', draw);
 function draw(e){
   //moveControl();
   var mouse = getMousePos(canvas, e);
-    for (var i = 0; i < cols; i++) {
-      for (var j = 0; j < rows; j++) {
-        tiles[i][j].show(); 
-        if(tiles[i][j].flagged && !tiles[i][j].isOpen){
-          ctx.fillStyle = "rgba(255, 0, 0)"
-          ellipse(tiles[i][j].x + tiles[i][j].w * 0.5, tiles[i][j].y + tiles[i][j].w * 0.5, tiles[i][j].w * 0.5);  
-        }  
-      }
+  for (var i = 0; i < cols; i++) {
+    for (var j = 0; j < rows; j++) {
+      
+      tiles[i][j].show(); 
+      if(tiles[i][j].flagged && !tiles[i][j].isOpen){
+        //ctx.fillStyle = "rgba(255, 0, 0)"
+        //ellipse(tiles[i][j].x + tiles[i][j].w * 0.5, tiles[i][j].y + tiles[i][j].w * 0.5, tiles[i][j].w * 0.5); 
+        flagImg.src = "images/flag.png"; 
+        ctx.drawImage(flagImg, tiles[i][j].x , tiles[i][j].y, tiles[i][j].w, tiles[i][j].h);
+      }  
     }
+  }
 }
 
 
 window.addEventListener("mousedown", buttonControl);
 function buttonControl(e) {
+  mineHitImg.src = "images/mine_hit.png";
   var mouse = getMousePos(canvas, e);
 
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
         //check right
-        if (e.button === 2 && tiles[i][j].inside(mouse) ) {
+        if (e.button === 1 && tiles[i][j].inside(mouse) ) {
           if (tiles[i][j].flagged) {
             tiles[i][j].flagged = false;
             numFlags--;
@@ -209,7 +222,7 @@ function buttonControl(e) {
             ctx.fillStyle = "rgba(255, 255, 255)";
             ctx.fillRect(tiles[i][j].x, tiles[i][j].y, tiles[i][j].w, tiles[i][j].w);
             break;
-          }
+          } 
           numFlags++;
           
           if (tiles[i][j].isBomb){
@@ -229,6 +242,9 @@ function buttonControl(e) {
             tiles[i][j].openTile();
             if (tiles[i][j].isBomb) {
               gameOver();
+              ctx.drawImage(mineHitImg, tiles[i][j].x , tiles[i][j].y, tiles[i][j].w, tiles[i][j].h);
+              break;
+            }else{
               break;
             }
             youWin();
@@ -290,6 +306,8 @@ function tile(i, j) {
   this.isOpen = false;
 
   this.show = function() {
+    mineImg.src = "images/mine.png"; 
+    
     ctx.beginPath();
     ctx.rect(this.x, this.y, this.w, this.h);
     ctx.fillStyle = "rgba(255, 255, 255)";
@@ -300,8 +318,7 @@ function tile(i, j) {
 
     if (this.isOpen) {
       if (this.isBomb) {
-        ctx.fillStyle = "rgba(127, 127, 127)";
-        ellipse(this.x + this.w * 0.5, this.y + this.w * 0.5, this.w * 0.5);
+          ctx.drawImage(mineImg, this.x , this.y, this.w, this.h);
       } else {
         ctx.beginPath();
         ctx.fillStyle = "rgba(200, 200, 200)";
