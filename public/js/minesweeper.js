@@ -14,7 +14,29 @@ let ypos;
 let numBombs = 9;
 let timer = window.setInterval(onTimerTick, 1000);
 let numFlags;
+let maxFlags;
 let minesLeft;
+let gameWin;
+
+const EASY = {
+  cols: 2,
+  rows: 2,
+  numBombs: 2,
+  numFlags: 3
+}
+const NORMAL = {
+  cols: 8,
+  rows: 8,
+  numBombs: 25,
+  numFlags: 7
+
+}
+const HARD = {
+  cols: 16,
+  rows: 16,
+  numBombs: 40,
+  numFlags: 5
+}
 
 //Maybe useful later
 //let bomb = Math.random() < 0.081;
@@ -29,44 +51,33 @@ function ellipse(x, y, r) {
 function setDifficulty(callback) {
     var difficultySelector = document.getElementById("difficulty");
     var difficulty = difficultySelector.selectedIndex;
-    const EASY = {
-      cols: 4,
-      rows: 4,
-      numBombs: 6,
-    }
-    const NORMAL = {
-      cols: 8,
-      rows: 8,
-      numBombs: 25,
-    }
-    const HARD = {
-      cols: 16,
-      rows: 16,
-      numBombs: 40,
-    }
     switch(difficulty) {
       case 0:
         cols = EASY.cols
         rows = EASY.rows
         numBombs = EASY.numBombs
+        maxFlags = EASY.numFlags;
         scale = 40
         break;
       case 1:
         cols = NORMAL.cols
         rows = NORMAL.rows
         numBombs = NORMAL.numBombs
+        maxFlags = NORMAL.numFlags;
         scale = 40
         break;
       case 2:
         cols = HARD.cols
         rows = HARD.rows
         numBombs = HARD.numBombs
+        maxFlags = HARD.numFlags;
         scale = 40
         break;
       default:
         cols = EASY.cols
         rows = EASY.rows
         numBombs = EASY.numBombs
+        //maxFlags = EASY.numFlags;
         scale = 40
         // code block
     }
@@ -81,6 +92,7 @@ function gameSetup(){
   document.getElementById("win").style.visibility = "hidden";
 
   ctx = canvas.getContext('2d');
+  gameWin = false;
 
   mineImg = new Image();
   flagImg = new Image();
@@ -90,6 +102,7 @@ function gameSetup(){
   bombMarkedImg = new Image();
   bombMarkedImg.src = "images/mine_marked.png";
 
+  //maxFlags = EASY.numFlags;
 
   //colorMode(RGB);
   //gridSet()
@@ -207,7 +220,6 @@ function getMousePos(canvas, evt) {
 }
 
 
-//TODO: Lcheck here for redundancy
 window.addEventListener('mouseup', draw);
 function draw(e){
   //moveControl();
@@ -215,7 +227,7 @@ function draw(e){
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       tiles[i][j].show(); 
-      if(tiles[i][j].flagged && !tiles[i][j].isOpen){
+      if(tiles[i][j].flagged && !tiles[i][j].isOpen && numFlags < maxFlags){
         //ctx.fillStyle = "rgba(255, 0, 0)"
         //ellipse(tiles[i][j].x + tiles[i][j].w * 0.5, tiles[i][j].y + tiles[i][j].w * 0.5, tiles[i][j].w * 0.5); 
         ctx.drawImage(flagImg, 
@@ -230,7 +242,7 @@ function draw(e){
               tiles[i][j].w, 
               tiles[i][j].h);
           }
-      }  
+      } 
     }
   }
 }
@@ -239,46 +251,40 @@ function draw(e){
 window.addEventListener("mousedown", buttonControl);
 function buttonControl(e) {
   var mouse = getMousePos(canvas, e);
-
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
-        //check right
-        if (e.button === 1 && tiles[i][j].inside(mouse) ) {
-          if (tiles[i][j].flagged) {
-            tiles[i][j].flagged = false;
-            numFlags--;
-            //console.log(numFlags);
-            ctx.fillStyle = "rgba(255, 255, 255)";
-            ctx.fillRect(tiles[i][j].x, tiles[i][j].y, tiles[i][j].w, tiles[i][j].w);
-            break;
-          } 
+      //check right
+      if (e.button === 1 && tiles[i][j].inside(mouse) && numFlags < maxFlags) {
+        if (tiles[i][j].flagged) {
+          //console.log(numFlags);
+          break;
+        } 
           numFlags++;
-          
-          if (tiles[i][j].isBomb){
-              minesLeft = (numBombs - numFlags);
-              document.getElementById("flagCount").innerHTML = minesLeft;
-          }
-
-          tiles[i][j].flagged = true;
+             
+        if (tiles[i][j].isBomb){
+            minesLeft = (numBombs - numFlags);
+            document.getElementById("flagCount").innerHTML = minesLeft;
         }
-        //check left
-        else if (e.button === 0) {
-          if (tiles[i][j].inside(mouse)) {
-            if (tiles[i][j].flagged) {
-              //tiles[i][j].flagged = false;
-              break;
-            }
-            tiles[i][j].openTile();
-            if (tiles[i][j].isBomb) {
-              gameOver();
-              ctx.drawImage(mineHitImg, tiles[i][j].x , tiles[i][j].y, tiles[i][j].w, tiles[i][j].h);
-              break;
-            }else{
-              break;
-            }
+
+        tiles[i][j].flagged = true;
+      }
+      //check left
+      else if (e.button === 0) {
+        if (tiles[i][j].inside(mouse)) {
+          if (tiles[i][j].flagged) {
+            //tiles[i][j].flagged = false;
+            break;
+          }
+          
+          tiles[i][j].openTile();
+          if (tiles[i][j].isBomb && !gameWin) {
+            gameOver();
+            ctx.drawImage(mineHitImg, tiles[i][j].x , tiles[i][j].y, tiles[i][j].w, tiles[i][j].h);
+          } else {
             youWin();
           }
-        }          
+        }
+      }        
     }
   }
 }
@@ -298,9 +304,10 @@ function moveControl(e) {
 function gameOver() {
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
-      tiles[i][j].isOpen = true;         
+      tiles[i][j].isOpen = true;   
     }
   }
+  gameWin = false;
   stopTimer();
   document.getElementById("lose").style.visibility = "visible";
   smileyLose();
@@ -310,16 +317,20 @@ function youWin() {
   //noLoop();
   winCount = 0;
   for (var i = 0; i < cols; i++) {
-      for (var j = 0; j < rows; j++) {
-        if (tiles[i][j].isOpen && !tiles[i][j].isBomb) {
-                  winCount++;
-                  if (winCount === ((cols * rows) - numBombs)) {
-                    stopTimer();
-                    smileyWin();
-                  }  
+    for (var j = 0; j < rows; j++) {
+      if (tiles[i][j].isOpen && !tiles[i][j].isBomb) {
+        winCount++;
+        if (winCount === ((cols * rows) - numBombs)) {
+          gameWin = true;
+          stopTimer();
+          smileyWin();
+        }  
+        else{
+          break;
         }
       }
     }
+  }
 }
 
 function tile(i, j) {
