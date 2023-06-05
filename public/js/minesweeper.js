@@ -17,12 +17,15 @@ let numFlags;
 let maxFlags;
 let minesLeft;
 let gameWin;
+let flagsleft;
 
+
+//Flags should always be less than bombs/ mines
 const EASY = {
   cols: 2,
   rows: 2,
   numBombs: 2,
-  numFlags: 3
+  numFlags: 1
 }
 const NORMAL = {
   cols: 8,
@@ -87,7 +90,9 @@ function setDifficulty(callback) {
 
 function gameSetup(){
   numFlags = 0;
-  document.getElementById("flagCount").innerHTML = numBombs;
+  flagsleft = 0;
+  document.getElementById("mineCount").innerHTML = numBombs;
+  document.getElementById("flagCount").innerHTML = maxFlags;
   document.getElementById("lose").style.visibility = "hidden";
   document.getElementById("win").style.visibility = "hidden";
 
@@ -101,9 +106,6 @@ function gameSetup(){
   mineHitImg.src = "images/mine_hit.png";
   bombMarkedImg = new Image();
   bombMarkedImg.src = "images/mine_marked.png";
-
-  //maxFlags = EASY.numFlags;
-
   //colorMode(RGB);
   //gridSet()
   ctx.canvas.width  = cols * scale;
@@ -219,7 +221,6 @@ function getMousePos(canvas, evt) {
   };
 }
 
-
 window.addEventListener('mouseup', draw);
 function draw(e){
   //moveControl();
@@ -260,13 +261,17 @@ function buttonControl(e) {
           break;
         } 
           numFlags++;
-             
+          
         if (tiles[i][j].isBomb){
-            minesLeft = (numBombs - numFlags);
-            document.getElementById("flagCount").innerHTML = minesLeft;
+          numBombs--;
+          document.getElementById("mineCount").innerHTML = numBombs;
         }
+          flagsleft =  maxFlags - numFlags;
+          document.getElementById("flagCount").innerHTML = flagsleft;
+        
 
         tiles[i][j].flagged = true;
+
       }
       //check left
       else if (e.button === 0) {
@@ -278,8 +283,8 @@ function buttonControl(e) {
           
           tiles[i][j].openTile();
           if (tiles[i][j].isBomb && !gameWin) {
-            gameOver();
             ctx.drawImage(mineHitImg, tiles[i][j].x , tiles[i][j].y, tiles[i][j].w, tiles[i][j].h);
+            gameOver();
           } else {
             youWin();
           }
@@ -359,7 +364,8 @@ function tile(i, j) {
     if (this.isOpen) {
       if (this.isBomb) {
           ctx.drawImage(mineImg, this.x , this.y, this.w, this.h);
-      } else {
+      }
+      else {
         ctx.beginPath();
         ctx.fillStyle = "rgba(200, 200, 200)";
         ctx.fillRect(this.x, this.y, this.w, this.w);

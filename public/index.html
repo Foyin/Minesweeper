@@ -8,7 +8,7 @@
     <body  onload="setDifficulty(gameSetup);">
         <h1> Minesweeper </h1>
 
-        <div>
+        <div id="gameInfoContainer">
             <select id="difficulty" >
                <option value="0">Easy</option>
                <option value="1">Normal</option>
@@ -17,6 +17,9 @@
             
             <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
             <span>Remaining Mines:</span>
+            <span id="mineCount" > </span>
+            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <span>Remaining Flags:</span>
             <span id="flagCount" > </span>
             <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
             <span>Time:</span>
