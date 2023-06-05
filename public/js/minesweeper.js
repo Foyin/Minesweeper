@@ -227,7 +227,7 @@ function draw(e){
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       tiles[i][j].show(); 
-      if(tiles[i][j].flagged && !tiles[i][j].isOpen && numFlags < maxFlags){
+      if(tiles[i][j].flagged && !tiles[i][j].isOpen && numFlags <= maxFlags){
         //ctx.fillStyle = "rgba(255, 0, 0)"
         //ellipse(tiles[i][j].x + tiles[i][j].w * 0.5, tiles[i][j].y + tiles[i][j].w * 0.5, tiles[i][j].w * 0.5); 
         ctx.drawImage(flagImg, 
