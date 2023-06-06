@@ -31,14 +31,14 @@ const NORMAL = {
   cols: 8,
   rows: 8,
   numBombs: 25,
-  numFlags: 7
+  numFlags: 15
 
 }
 const HARD = {
   cols: 16,
   rows: 16,
   numBombs: 40,
-  numFlags: 5
+  numFlags: 20
 }
 
 //Maybe useful later
@@ -281,14 +281,16 @@ function buttonControl(e) {
             break;
           }
           tiles[i][j].openTile();
-          youWin();
           if (tiles[i][j].isBomb && !gameWin) {
             ctx.drawImage(mineHitImg, tiles[i][j].x , tiles[i][j].y, tiles[i][j].w, tiles[i][j].h);
             gameOver();
-          } else{
+          } 
+          else if(!tiles[i][j].isBomb && gameWin){
+            youWin();
+          }
+          else{
             break;
           }
-          
         }
       }        
     }
@@ -368,7 +370,7 @@ function tile(i, j) {
       }
       else {
         ctx.beginPath();
-        ctx.fillStyle = "rgba(200, 200, 200)";
+        ctx.fillStyle = "rgba(230, 230, 230)";
         ctx.fillRect(this.x, this.y, this.w, this.w);
         if (this.numNeighbour > 0) {
           ctx.textAlign = "center";

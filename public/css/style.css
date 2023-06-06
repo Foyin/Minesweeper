@@ -21,6 +21,8 @@
     width: 95vw;
     margin: 0px auto;
     position: relative;
+    background-color: rgb(230, 230, 230);
+    width: 100vw;
 }
 
 canvas {
@@ -106,4 +108,20 @@ div {
 body{
     background-image:    url(../images/bliss.jpg);
     background-size: cover; 
+    margin: 0;
+}
+
+#gameArea{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 2fr));
+    padding: 5px;
+}
+
+#gameArea:nth-child(2){
+    display: flex;
+    justify-content: space-between;
+
+}
+#gameArea ul{
+    text-align: left;
 }
