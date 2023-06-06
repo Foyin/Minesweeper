@@ -22,7 +22,7 @@
     margin: 0px auto;
     position: relative;
     background-color: rgb(230, 230, 230);
-    width: 100vw;
+    width: 100%;
 }
 
 canvas {
@@ -123,4 +123,11 @@ body{
 }
 #gameArea ul{
     text-align: left;
+}
+#gameInfoContainer span{
+    font-size: larger;
+}
+
+#gameInfoContainer{
+    padding: 5px;
 }
