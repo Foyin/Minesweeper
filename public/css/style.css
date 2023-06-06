@@ -106,8 +106,7 @@ div {
 }
 
 body{
-    background-image:    url(../images/bliss.jpg);
-    background-size: cover; 
+    background-color: rgb(230, 230, 230);
     margin: 0;
 }
 
