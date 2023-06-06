@@ -280,14 +280,15 @@ function buttonControl(e) {
             //tiles[i][j].flagged = false;
             break;
           }
-          
           tiles[i][j].openTile();
+          youWin();
           if (tiles[i][j].isBomb && !gameWin) {
             ctx.drawImage(mineHitImg, tiles[i][j].x , tiles[i][j].y, tiles[i][j].w, tiles[i][j].h);
             gameOver();
-          } else {
-            youWin();
+          } else{
+            break;
           }
+          
         }
       }        
     }
