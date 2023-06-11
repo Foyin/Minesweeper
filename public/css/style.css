@@ -5,6 +5,10 @@
     background-image: url("../images/clear.png");
 }
 
+html{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 .hidden {
     background-image: url("../images/hidden.png");
 }
