@@ -285,7 +285,7 @@ function buttonControl(e) {
             ctx.drawImage(mineHitImg, tiles[i][j].x , tiles[i][j].y, tiles[i][j].w, tiles[i][j].h);
             gameOver();
           } 
-          else if(!tiles[i][j].isBomb && gameWin){
+          else if(!tiles[i][j].isBomb){
             youWin();
           }
           else{
@@ -328,14 +328,14 @@ function youWin() {
     for (var j = 0; j < rows; j++) {
       if (tiles[i][j].isOpen && !tiles[i][j].isBomb) {
         winCount++;
-        if (winCount === ((cols * rows) - numBombs)) {
-          gameWin = true;
-          stopTimer();
-          smileyWin();
-        }  
-        else{
-          break;
-        }
+      }
+      if (winCount === ((cols * rows) - numBombs)) {
+        gameWin = true;
+        stopTimer();
+        smileyWin();
+      }  
+      else{
+        break;
       }
     }
   }
