@@ -6,7 +6,6 @@ You can change difficulty before restarting the game
 
 Demo hosted [here](https://main.d4hqf5nx8i3oy.amplifyapp.com/)
 
-![MineSweeper](/public/images/Minesweeper.png)
 
  - Right click to open tile center
  - Click roller on mouse to set flag, if you are using a mousepad you may not be able to use this feature
