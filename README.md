@@ -4,7 +4,7 @@ Minesweeper game made with HTML, CSS and javascript mainly using the HTML canvas
 Click on smiley to start and restart the game.
 You can change difficulty before restarting the game
 
-Demo hosted [here](https://main.d4hqf5nx8i3oy.amplifyapp.com/)
+Demo hosted [here](https://foyin.github.io/Minesweeper/)
 
 
  - Right click to open tile center
