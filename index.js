@@ -12,10 +12,10 @@ server.listen(port, () => {
 });
  
 // Make your Express server:
-app.use(express.static(path.join(__dirname, 'docs')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Add favicon
-app.use(favicon(path.join(__dirname, 'docs', 'images/mine.png')));
+app.use(favicon(path.join(__dirname, 'public', 'images/mine.png')));
 
 /* catch 404 and forward to error handler
 app.use(function(req, res, next) {
