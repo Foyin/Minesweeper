@@ -22,23 +22,23 @@ let flagsleft;
 
 //Flags should always be less than bombs/ mines
 const EASY = {
-  cols: 2,
-  rows: 2,
-  numBombs: 2,
-  numFlags: 1
+  cols: 3,
+  rows: 3,
+  numBombs: 3,
+  numFlags: 3
 }
 const NORMAL = {
   cols: 8,
   rows: 8,
   numBombs: 25,
-  numFlags: 15
+  numFlags: 20
 
 }
 const HARD = {
   cols: 16,
   rows: 16,
   numBombs: 40,
-  numFlags: 20
+  numFlags: 30
 }
 
 //Maybe useful later
@@ -101,11 +101,11 @@ function gameSetup(){
 
   mineImg = new Image();
   flagImg = new Image();
-  flagImg.src = "images/flag.png"; 
+  flagImg.src = "public/images/flag.png"; 
   mineHitImg = new Image();
-  mineHitImg.src = "images/mine_hit.png";
+  mineHitImg.src = "public/images/mine_hit.png";
   bombMarkedImg = new Image();
-  bombMarkedImg.src = "images/mine_marked.png";
+  bombMarkedImg.src = "public/images/mine_marked.png";
   //colorMode(RGB);
   //gridSet()
   ctx.canvas.width  = cols * scale;
@@ -354,7 +354,7 @@ function tile(i, j) {
   this.isOpen = false;
 
   this.show = function() {
-    mineImg.src = "images/mine.png"; 
+    mineImg.src = "public/images/mine.png"; 
     
     ctx.beginPath();
     ctx.rect(this.x, this.y, this.w, this.h);
