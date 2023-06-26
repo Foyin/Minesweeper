@@ -329,15 +329,15 @@ function youWin() {
       if (tiles[i][j].isOpen && !tiles[i][j].isBomb) {
         winCount++;
       }
-      if (winCount === ((cols * rows) - numBombs)) {
-        gameWin = true;
-        stopTimer();
-        smileyWin();
-      }  
-      else{
-        break;
-      }
     }
+  }
+  if (winCount === ((cols * rows) - numBombs)) {
+    gameWin = true;
+    stopTimer();
+    smileyWin();
+  }  
+  else{
+    return;
   }
 }
 
