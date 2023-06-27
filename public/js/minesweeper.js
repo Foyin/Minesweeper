@@ -24,8 +24,8 @@ let flagsleft;
 const EASY = {
   cols: 3,
   rows: 3,
-  numBombs: 1,
-  numFlags: 1
+  numBombs: 3,
+  numFlags: 3
 }
 const NORMAL = {
   cols: 8,
@@ -224,7 +224,7 @@ function getMousePos(canvas, evt) {
 window.addEventListener('mouseup', draw);
 function draw(e){
   //moveControl();
-  var mouse = getMousePos(canvas, e);
+  //var mouse = getMousePos(canvas, e);
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       tiles[i][j].show(); 
@@ -255,30 +255,26 @@ function buttonControl(e) {
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       //check right
-      if (e.button === 1 && tiles[i][j].inside(mouse) && numFlags < maxFlags) {
+      if (e.button === 1 && !tiles[i][j].isOpen && tiles[i][j].inside(mouse) && numFlags <= maxFlags) {
+        numFlags++;
+        flagsleft =  maxFlags - numFlags;
+        document.getElementById("flagCount").innerHTML = flagsleft;
+        tiles[i][j].flagged = true;
+
         if (tiles[i][j].flagged) {
           //console.log(numFlags);
+          numFlags--;
           break;
         } 
-          numFlags++;
-          
+
         if (tiles[i][j].isBomb){
           numBombs--;
           document.getElementById("mineCount").innerHTML = numBombs;
         }
-          flagsleft =  maxFlags - numFlags;
-          document.getElementById("flagCount").innerHTML = flagsleft;
-        
-
-        tiles[i][j].flagged = true;
-
       }
       //check left
       else if (e.button === 0) {
         if (tiles[i][j].inside(mouse)) {
-          if (gameState  === "WIN" || gameState === "LOSE"){
-            gameState  === "NEUTRAL"
-          }
           if (tiles[i][j].flagged) {
             //tiles[i][j].flagged = false;
             break;
