@@ -28,16 +28,16 @@
         </div>
         
         <div id="smiley" class="smiley" onmousedown="smileyDown();" onmouseup="smileyUp();"  ></div>
-        
-        <div id="minefield">
-
-            <div id="win">
+        <div class="winLoseBanner">
+            <div id="win" class="winLose">
                 <b>You Win!</b>
             </div>
 
-            <div id="lose">
-               <b> You Lose!</b>
+            <div id="lose" class="winLose">
+            <b> You Lose!</b>
             </div>
+        </div>
+        <div id="minefield">
             <div id="gameArea">
                 <canvas id="myCanvas"></canvas>
                 <div id="infoSection">

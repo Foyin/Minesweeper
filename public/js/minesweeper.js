@@ -16,7 +16,7 @@ let timer = window.setInterval(onTimerTick, 1000);
 let numFlags;
 let maxFlags;
 let minesLeft;
-let gameWin;
+let gameState;
 let flagsleft;
 
 
@@ -24,21 +24,21 @@ let flagsleft;
 const EASY = {
   cols: 3,
   rows: 3,
-  numBombs: 3,
-  numFlags: 3
+  numBombs: 1,
+  numFlags: 1
 }
 const NORMAL = {
   cols: 8,
   rows: 8,
-  numBombs: 25,
-  numFlags: 20
+  numBombs: 15,
+  numFlags: 10
 
 }
 const HARD = {
   cols: 16,
   rows: 16,
-  numBombs: 40,
-  numFlags: 30
+  numBombs: 30,
+  numFlags: 20
 }
 
 //Maybe useful later
@@ -97,7 +97,7 @@ function gameSetup(){
   document.getElementById("win").style.visibility = "hidden";
 
   ctx = canvas.getContext('2d');
-  gameWin = false;
+  gameState = "NEUTRAL"; // NEUTRAL, WIN or LOSE
 
   mineImg = new Image();
   flagImg = new Image();
@@ -276,21 +276,40 @@ function buttonControl(e) {
       //check left
       else if (e.button === 0) {
         if (tiles[i][j].inside(mouse)) {
+          if (gameState  === "WIN" || gameState === "LOSE"){
+            gameState  === "NEUTRAL"
+          }
           if (tiles[i][j].flagged) {
             //tiles[i][j].flagged = false;
             break;
           }
           tiles[i][j].openTile();
-          if (tiles[i][j].isBomb && !gameWin) {
+          youWin();
+          if (tiles[i][j].isBomb) {
             ctx.drawImage(mineHitImg, tiles[i][j].x , tiles[i][j].y, tiles[i][j].w, tiles[i][j].h);
             gameOver();
           } 
-          else if(!tiles[i][j].isBomb){
-            youWin();
-          }
+          
           else{
             break;
           }
+        }
+
+        switch(gameState){
+          case "WIN":
+            document.getElementById("win").style.visibility = "visible";
+            document.getElementById("lose").style.visibility = "hidden";
+            smileyWin();
+          break;
+          case "LOSE":
+            document.getElementById("lose").style.visibility = "visible";
+            document.getElementById("win").style.visibility = "hidden";
+            smileyLose();
+          break;
+          case "NEUTRAL":
+            document.getElementById("lose").style.visibility = "hidden";
+            document.getElementById("win").style.visibility = "hidden";
+          break;
         }
       }        
     }
@@ -315,10 +334,11 @@ function gameOver() {
       tiles[i][j].isOpen = true;   
     }
   }
-  gameWin = false;
-  stopTimer();
-  document.getElementById("lose").style.visibility = "visible";
-  smileyLose();
+  if( gameState === "NEUTRAL"){
+    gameState = "LOSE";
+    stopTimer();
+  }
+  
 }
 
 function youWin() {
@@ -331,8 +351,8 @@ function youWin() {
       }
     }
   }
-  if (winCount === ((cols * rows) - numBombs)) {
-    gameWin = true;
+  if (winCount === ((cols * rows) - numBombs) && gameState === "NEUTRAL") {
+    gameState = "WIN";
     stopTimer();
     smileyWin();
   }  

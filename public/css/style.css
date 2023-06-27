@@ -34,12 +34,21 @@ canvas {
     margin: 0 auto 0 auto;
     display: block;
 }
+
+.winLoseBanner{
+    position: relative;
+    height: 5vh;
+}
+
 #win {
     font-family: verdana;
     font-size: 2vw;
     color: white;
     visibility: hidden;
     background-color: green;
+    position: absolute;
+    width: 100%;
+    min-height: 5vh;
 }
 
 #lose {
@@ -48,6 +57,10 @@ canvas {
     color: white;
     visibility: hidden;
     background-color: red;
+    position: absolute;
+    width: 100%;
+    min-height: 5vh;
+
 }
 
 .mine_hit {
