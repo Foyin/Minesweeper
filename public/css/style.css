@@ -40,6 +40,12 @@ canvas {
     height: 5vh;
 }
 
+.winLose{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #win {
     font-family: verdana;
     font-size: 2vw;
@@ -97,9 +103,11 @@ canvas {
 
 .smiley {
     margin:auto;
-    width: 26px;
-    height: 26px;
+    width: 32px;
+    height: 32px;
     background-image: url("../images/face_up.png");
+    background-position: center;
+    background-size: contain;
 }
 .face_down {
     background-image: url("../images/face_down.png");

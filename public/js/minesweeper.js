@@ -232,17 +232,17 @@ function draw(e){
         //ctx.fillStyle = "rgba(255, 0, 0)"
         //ellipse(tiles[i][j].x + tiles[i][j].w * 0.5, tiles[i][j].y + tiles[i][j].w * 0.5, tiles[i][j].w * 0.5); 
         ctx.drawImage(flagImg, 
-          tiles[i][j].x,
-          tiles[i][j].y,
-          tiles[i][j].w, 
-          tiles[i][j].h);
-          if(tiles[i][j].isBomb){
-            ctx.drawImage(bombMarkedImg, 
-              tiles[i][j].x,
-              tiles[i][j].y,
-              tiles[i][j].w, 
-              tiles[i][j].h);
-          }
+        tiles[i][j].x,
+        tiles[i][j].y,
+        tiles[i][j].w, 
+        tiles[i][j].h);
+        if(tiles[i][j].isBomb){
+          ctx.drawImage(bombMarkedImg, 
+            tiles[i][j].x,
+            tiles[i][j].y,
+            tiles[i][j].w, 
+            tiles[i][j].h);
+        }
       } 
     }
   }
@@ -255,15 +255,14 @@ function buttonControl(e) {
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       //check right
-      if (e.button === 1 && !tiles[i][j].isOpen && tiles[i][j].inside(mouse) && numFlags <= maxFlags) {
-        numFlags++;
-        flagsleft =  maxFlags - numFlags;
-        document.getElementById("flagCount").innerHTML = flagsleft;
-        tiles[i][j].flagged = true;
+      if (e.button === 1 && !tiles[i][j].isOpen && tiles[i][j].inside(mouse) && numFlags < maxFlags) {
 
         if (tiles[i][j].flagged) {
           //console.log(numFlags);
+          tiles[i][j].flagged = false;
           numFlags--;
+          ctx.fillStyle = "rgba(255, 255, 255)";
+          ctx.fillRect(tiles[i][j].x, tiles[i][j].y, tiles[i][j].w, tiles[i][j].w);
           break;
         } 
 
@@ -271,6 +270,10 @@ function buttonControl(e) {
           numBombs--;
           document.getElementById("mineCount").innerHTML = numBombs;
         }
+        numFlags++;
+        flagsleft =  maxFlags - numFlags;
+        document.getElementById("flagCount").innerHTML = flagsleft;
+        tiles[i][j].flagged = true;
       }
       //check left
       else if (e.button === 0) {
