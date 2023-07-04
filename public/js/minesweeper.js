@@ -18,6 +18,7 @@ let maxFlags;
 let minesLeft;
 let gameState;
 let flagsleft;
+var start;
 
 
 //Flags should always be less than bombs/ mines
@@ -89,6 +90,8 @@ function setDifficulty(callback) {
 }
 
 function gameSetup(){
+  start = Date.now();   
+
   numFlags = 0;
   flagsleft = 0;
   document.getElementById("mineCount").innerHTML = numBombs;
@@ -157,9 +160,8 @@ function gameSetup(){
 }
 
 function startTimer() { 
-    timeValue = 0;   
     window.clearInterval(timer);
-    timer = window.setInterval(onTimerTick, 1000);
+    timer = window.setInterval(onTimerTick, 500);
 }
 
 function stopTimer(){
@@ -167,12 +169,11 @@ function stopTimer(){
 }
 
 function onTimerTick() {
-    timeValue++;
-    updateTimer();
-}
-
-function updateTimer() {
-    document.getElementById("timer").innerHTML = timeValue;
+  var delta = Date.now() - start; // milliseconds elapsed since start
+  //output(Math.floor(delta / 1000)); // in seconds
+  // alternatively just show wall clock time:
+  //var result = new Date().toUTCString()
+  document.getElementById("timer").innerHTML = Math.floor(delta / 1000);
 }
 
 function make2DArray(cols, rows) {
