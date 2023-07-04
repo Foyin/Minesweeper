@@ -109,6 +109,13 @@ canvas {
     background-position: center;
     background-size: contain;
 }
+
+#smiley{
+    width: 32px;
+    height: 32px;
+    margin: auto;
+}
+
 .face_down {
     background-image: url("../images/face_down.png");
 }
@@ -158,7 +165,7 @@ select{
 }
 
 #gameInfoContainer{
-    padding: 5px;
+    margin: 15px;
 }
 
 #infoSection{
