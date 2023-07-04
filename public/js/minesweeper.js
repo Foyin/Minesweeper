@@ -261,8 +261,13 @@ function buttonControl(e) {
         if(numFlags < maxFlags){
           if (tiles[i][j].flagged) {
             //console.log(numFlags);
+            document.getElementById("flagCount").innerHTML = flagsleft;
+
+            numFlags++;
             if(tiles[i][j].isBomb){
               numBombs++;
+              numFlags++;
+              document.getElementById("flagCount").innerHTML = flagsleft;
               document.getElementById("mineCount").innerHTML = numBombs;
             }
             tiles[i][j].flagged = false;
@@ -286,6 +291,7 @@ function buttonControl(e) {
             //console.log(numFlags);
             if(tiles[i][j].isBomb){
               numBombs++;
+              document.getElementById("flagCount").innerHTML = flagsleft;
               document.getElementById("mineCount").innerHTML = numBombs;
             }
             tiles[i][j].flagged = false;
