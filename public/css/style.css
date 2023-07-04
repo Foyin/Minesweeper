@@ -22,11 +22,9 @@ html{
 }
 
 #minefield {
-    width: 95vw;
     margin: 0px auto;
     position: relative;
     background-color: rgb(230, 230, 230);
-    width: 100%;
 }
 
 canvas {
@@ -110,15 +108,13 @@ canvas {
 }
 
 #smiley{
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     margin: auto;
 }
 
 .smiley {
     margin:auto;
-    width: 22px;
-    height: 22px;
     background-image: url("../images/face_up.png");
     background-position: center;
     background-size: contain;
@@ -156,7 +152,7 @@ select{
 
 #gameArea{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 2fr));
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 2fr));
     padding: 5px;
 }
 
