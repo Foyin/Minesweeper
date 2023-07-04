@@ -152,7 +152,7 @@ select{
 
 #gameArea{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 2fr));
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 2fr));
     padding: 5px;
 }
 
