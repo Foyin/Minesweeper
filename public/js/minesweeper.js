@@ -255,25 +255,45 @@ function buttonControl(e) {
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       //check right
-      if (e.button === 1 && !tiles[i][j].isOpen && tiles[i][j].inside(mouse) && numFlags < maxFlags) {
+      if (e.button === 1 && !tiles[i][j].isOpen && tiles[i][j].inside(mouse)) {
 
-        if (tiles[i][j].flagged) {
-          //console.log(numFlags);
-          tiles[i][j].flagged = false;
-          numFlags--;
-          ctx.fillStyle = "rgba(255, 255, 255)";
-          ctx.fillRect(tiles[i][j].x, tiles[i][j].y, tiles[i][j].w, tiles[i][j].w);
-          break;
-        } 
+        if(numFlags < maxFlags){
+          if (tiles[i][j].flagged) {
+            //console.log(numFlags);
+            if(tiles[i][j].isBomb){
+              numBombs++;
+              document.getElementById("mineCount").innerHTML = numBombs;
+            }
+            tiles[i][j].flagged = false;
+            numFlags--;
+            ctx.fillStyle = "rgba(255, 255, 255)";
+            ctx.fillRect(tiles[i][j].x, tiles[i][j].y, tiles[i][j].w, tiles[i][j].w);
+            break;
+          } 
 
-        if (tiles[i][j].isBomb){
-          numBombs--;
-          document.getElementById("mineCount").innerHTML = numBombs;
+          if (tiles[i][j].isBomb){
+            numBombs--;
+            document.getElementById("mineCount").innerHTML = numBombs;
+          } 
+          numFlags++;
+          flagsleft =  maxFlags - numFlags;
+          document.getElementById("flagCount").innerHTML = flagsleft;
+          tiles[i][j].flagged = true;
         }
-        numFlags++;
-        flagsleft =  maxFlags - numFlags;
-        document.getElementById("flagCount").innerHTML = flagsleft;
-        tiles[i][j].flagged = true;
+        else if(numFlags >= maxFlags){
+          if (tiles[i][j].flagged) {
+            //console.log(numFlags);
+            if(tiles[i][j].isBomb){
+              numBombs++;
+              document.getElementById("mineCount").innerHTML = numBombs;
+            }
+            tiles[i][j].flagged = false;
+            numFlags--;
+            ctx.fillStyle = "rgba(255, 255, 255)";
+            ctx.fillRect(tiles[i][j].x, tiles[i][j].y, tiles[i][j].w, tiles[i][j].w);
+            break;
+          }
+        }
       }
       //check left
       else if (e.button === 0) {
