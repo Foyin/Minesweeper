@@ -23,8 +23,8 @@ var start;
 
 //Flags should always be less than bombs/ mines
 const EASY = {
-  cols: 3,
-  rows: 3,
+  cols: 4,
+  rows: 4,
   numBombs: 3,
   numFlags: 3
 }
