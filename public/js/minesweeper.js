@@ -21,12 +21,12 @@ let flagsleft;
 var start;
 
 
-//Flags should always be less than bombs/ mines
+//Flags should always be less than bombs or mines
 const EASY = {
-  cols: 4,
-  rows: 4,
-  numBombs: 3,
-  numFlags: 3
+  cols: 5,
+  rows: 5,
+  numBombs: 5,
+  numFlags: 5
 }
 const NORMAL = {
   cols: 8,
