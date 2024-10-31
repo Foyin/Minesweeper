@@ -25,6 +25,8 @@ html{
     margin: 0px auto;
     position: relative;
     background-color: rgb(230, 230, 230);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(35rem, 2fr));
 }
 
 canvas {
@@ -151,8 +153,6 @@ select{
 }
 
 #gameArea{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(35rem, 2fr));
     padding: 5px;
 }
 
@@ -173,5 +173,11 @@ select{
 }
 
 #infoSection{
+    display: flex;
+    flex-direction: row;
     height: 100%;
+}
+
+#infoSection div{
+    margin: 20px;
 }
