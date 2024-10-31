@@ -14,5 +14,4 @@ Demo hosted [here](https://foyin.github.io/Minesweeper/)
  - Setting a flag on a tile with a bomb under it marks the mine location and shows you mine without ending game
  - Click smiley to reset game
  - After choosing new difficulty, click smiley to start game
- - Top ten scores stored on leaderboard
  
