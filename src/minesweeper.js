@@ -31,7 +31,7 @@ const EASY = {
 const NORMAL = {
   cols: 8,
   rows: 8,
-  numBombs: 15,
+  numBombs: 10,
   numFlags: 10
 
 }
